@@ -1,0 +1,2 @@
+# 依赖目录（npm/yarn/pnpm 安装的包，无需跟踪）
+node_modules/
