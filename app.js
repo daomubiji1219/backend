@@ -18,7 +18,7 @@ require('dotenv').config();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(history());
+// app.use(history()); // 在 Vercel 中由路由配置处理
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
 app.use(cors({
@@ -30,24 +30,24 @@ app.use(cors({
   ],
   credentials: true, // 如果需要携带 cookies
 }));
-// 路由fallback到index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public/dist/index.html'));
-});
+// 路由fallback到index.html - 在 Vercel 中由路由配置处理
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'public/dist/index.html'));
+// });
 
 // 集成认证路由
 app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
 
-// SPA路由处理 - 所有非API路由都返回index.html
-app.get('*', (req, res) => {
-  // 如果请求的是API路径，跳过
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ error: 'API endpoint not found' });
-  }
-  // 返回前端应用
-  res.sendFile(path.join(__dirname, 'public/dist/index.html'));
-});
+// SPA 路由处理 - 在 Vercel 中由路由配置处理
+// app.get('*', (req, res) => {
+//   // 如果请求的是API路径，跳过
+//   if (req.path.startsWith('/api/')) {
+//     return res.status(404).json({ error: 'API endpoint not found' });
+//   }
+//   // 返回前端应用
+//   res.sendFile(path.join(__dirname, 'public/dist/index.html'));
+// });
 
 
 const openai = new OpenAI({

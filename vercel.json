@@ -24,8 +24,12 @@
       "dest": "/public/dist/$1"
     },
     {
+      "src": "/",
+      "dest": "/public/dist/index.html"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/app.js"
+      "dest": "/public/dist/index.html"
     }
   ],
   "env": {
