@@ -17,8 +17,8 @@
     "file": "assets/http-vendor-B2M11dG_.js",
     "name": "http-vendor"
   },
-  "_index-BDyoCcdP.js": {
-    "file": "assets/index-BDyoCcdP.js",
+  "_index-BwfHx1qh.js": {
+    "file": "assets/index-BwfHx1qh.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
@@ -45,7 +45,7 @@
     "name": "ui-vendor"
   },
   "index.html": {
-    "file": "assets/index-tqYKx1q6.js",
+    "file": "assets/index-BPNjYpzX.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -57,7 +57,7 @@
       "_router-vendor-CorBmyLz.js"
     ],
     "dynamicImports": [
-      "_index-BDyoCcdP.js",
+      "_index-BwfHx1qh.js",
       "src/components/Layout/MainLayout.tsx"
     ],
     "css": [
@@ -65,7 +65,7 @@
     ]
   },
   "src/components/Layout/MainLayout.tsx": {
-    "file": "assets/MainLayout-h9aHDASY.js",
+    "file": "assets/MainLayout-Cth4SXJ_.js",
     "name": "MainLayout",
     "src": "src/components/Layout/MainLayout.tsx",
     "isDynamicEntry": true,
