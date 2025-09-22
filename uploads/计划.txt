@@ -1,0 +1,153 @@
+以下是为期 4-6个月 的 React 学习计划（以实习为目标，兼顾基础与实战），分阶段拆解，确保你高效掌握核心能力：
+
+一、学习阶段与时间分配（总时长：4-6个月）
+阶段 1：基础夯实（3-4周）
+目标：掌握 React 核心语法、JavaScript/ES6 必备知识
+
+学习内容：
+
+JavaScript 基础补强（若薄弱）：
+
+变量作用域、闭包、原型链、Promise、async/await
+
+重点：数组方法（map/filter/reduce）、对象操作
+
+React 核心概念：
+
+JSX 语法、组件化思想（函数组件 vs 类组件）
+
+状态管理：useState, useEffect, useContext
+
+组件通信：Props 传递、Context API
+
+工具链入门：
+
+使用 create-react-app 脚手架搭建项目
+
+基础 npm 命令、Git 版本控制（提交代码到 GitHub）
+
+每日任务：
+
+2小时：动手写代码（不要只看教程）
+
+1小时：刷 JavaScript/React 基础面试题（如：事件循环、虚拟 DOM 原理）
+
+推荐资源：
+
+React 官方文档（精读 Hooks 部分）：https://react.dev/
+
+免费实战课：Scrimba《Learn React》互动课程
+
+JavaScript 补强：《JavaScript高级程序设计》（第4版）
+
+阶段 2：项目实战（6-8周）
+目标：完成 2-3 个完整项目（写进简历），掌握工程化开发流程
+
+项目选择建议：
+
+项目 1（基础）：仿主流应用（如微博/Twitter）
+
+功能：用户登录、发帖/评论、点赞、个人主页
+
+技术栈：React + React Router + 本地状态管理（Context API）
+
+部署：Vercel/Netlify
+
+项目 2（进阶）：管理后台系统
+
+功能：表格数据展示（Mock数据）、筛选/分页、图表（Echarts/Ant Design Charts）
+
+技术栈：React + Ant Design/Chakra UI + Axios
+
+加分项：实现权限控制（路由守卫）
+
+项目 3（差异化）：技术向工具（如 Markdown 编辑器、TodoList Chrome 插件）
+
+技术栈：React + TypeScript + Webpack 自定义配置
+
+加分项：单元测试（Jest + React Testing Library）
+
+关键要求：
+
+代码规范：使用 ESLint + Prettier
+
+性能优化：实现至少一项优化（如代码分割、图片懒加载）
+
+记录过程：用 GitHub 提交记录 + README 文档（说明技术难点和解决方案）
+
+阶段 3：进阶技术扩展（3-4周）
+目标：掌握企业级开发必备技能，提升竞争力
+
+学习内容：
+
+状态管理：Redux Toolkit（必学） / Zustand（选学）
+
+路由：React Router v6（动态路由、懒加载）
+
+TypeScript：基础类型、泛型、与 React 结合使用
+
+工程化：Webpack 基础配置、Babel 插件原理
+
+网络请求：Axios 封装（拦截器、错误处理）
+
+测试：Jest 单元测试基础
+
+每日任务：
+
+1小时：阅读技术文章（如掘金、React Status 周刊）
+
+1小时：参与开源项目（如修复 Ant Design 的简单 issue）
+
+阶段 4：面试冲刺（4-6周）
+目标：针对性准备实习面试，提升通过率
+
+核心任务：
+
+算法刷题：
+
+每日 2-3 题（LeetCode 热题 100：https://leetcode.cn/problem-list/2cktkvj/）
+
+重点：数组、字符串、链表、二叉树（Easy-Medium难度）
+
+八股文整理：
+
+React 原理：虚拟 DOM、Diff 算法、Fiber 架构
+
+浏览器：事件循环、缓存机制、性能优化指标
+
+HTTP：状态码、缓存头、HTTPS 握手过程
+
+模拟面试：
+
+使用牛客网/LeetCode 模拟面试功能
+
+录制视频复盘：观察表达是否清晰、逻辑是否连贯
+
+简历优化：
+
+项目描述遵循 STAR 法则（情境、任务、行动、结果）
+
+示例：
+
+“使用 React Hooks 实现动态表单生成器，通过 JSON 配置渲染表单组件，减少重复代码量 70%”
+
+二、关键里程碑与时间表
+时间节点	目标达成
+第1个月结束	完成 React 基础学习 + 第一个项目（仿应用）
+第2个月结束	完成 2-3 个项目 + 掌握 Redux/Typescript
+第3个月结束	开始投递日常实习岗位 + 算法刷题100+
+第4-6个月	面试冲刺 + 收割 Offer
+三、避坑指南
+不要过度追求技术栈广度：优先掌握 React + 一门 UI 库（如 Ant Design）
+
+项目宁可简单但完整：面试官更关注代码质量和解决问题的思路
+
+尽早投递简历：即使未完全准备好，实习面试也是学习机会
+
+利用开源社区：参与 Hacktoberfest 等活动（10月）积累贡献记录
+
+四、推荐学习路线图
+plaintext
+复制
+React 基础 → 项目实战 → Redux/TS → 工程化 → 算法/八股 → 面试
+坚持每天写代码，哪怕只有 30 分钟。实习更看重动手能力而非理论深度，按照这个计划，4个月后你将有足够竞争力冲击大厂日常实习！

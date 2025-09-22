@@ -1,0 +1,84 @@
+{
+  "_chart-vendor-DTmvAcN5.js": {
+    "file": "assets/chart-vendor-DTmvAcN5.js",
+    "name": "chart-vendor",
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js"
+    ]
+  },
+  "_editor-vendor-DFgV88Zr.js": {
+    "file": "assets/editor-vendor-DFgV88Zr.js",
+    "name": "editor-vendor",
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js"
+    ]
+  },
+  "_http-vendor-B2M11dG_.js": {
+    "file": "assets/http-vendor-B2M11dG_.js",
+    "name": "http-vendor"
+  },
+  "_index-DNh-nhlH.js": {
+    "file": "assets/index-DNh-nhlH.js",
+    "name": "index",
+    "isDynamicEntry": true,
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js",
+      "index.html"
+    ]
+  },
+  "_router-vendor-CorBmyLz.js": {
+    "file": "assets/router-vendor-CorBmyLz.js",
+    "name": "router-vendor",
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js"
+    ]
+  },
+  "_state-vendor-D_F1fJYH.js": {
+    "file": "assets/state-vendor-D_F1fJYH.js",
+    "name": "state-vendor",
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js"
+    ]
+  },
+  "_ui-vendor-B9iAlnAi.js": {
+    "file": "assets/ui-vendor-B9iAlnAi.js",
+    "name": "ui-vendor"
+  },
+  "index.html": {
+    "file": "assets/index-CNGzTXzs.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_ui-vendor-B9iAlnAi.js",
+      "_state-vendor-D_F1fJYH.js",
+      "_http-vendor-B2M11dG_.js",
+      "_editor-vendor-DFgV88Zr.js",
+      "_router-vendor-CorBmyLz.js"
+    ],
+    "dynamicImports": [
+      "_index-DNh-nhlH.js",
+      "src/components/Layout/MainLayout.tsx"
+    ],
+    "css": [
+      "assets/index-t2Xj7Mc_.css"
+    ]
+  },
+  "src/components/Layout/MainLayout.tsx": {
+    "file": "assets/MainLayout-Cbb0IGBb.js",
+    "name": "MainLayout",
+    "src": "src/components/Layout/MainLayout.tsx",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "_state-vendor-D_F1fJYH.js",
+      "_ui-vendor-B9iAlnAi.js",
+      "_router-vendor-CorBmyLz.js",
+      "_http-vendor-B2M11dG_.js",
+      "_editor-vendor-DFgV88Zr.js"
+    ],
+    "css": [
+      "assets/MainLayout-CBeJy0Mk.css"
+    ]
+  }
+}
