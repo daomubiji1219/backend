@@ -12,27 +12,27 @@
   ],
   "routes": [
     {
-      "source": "/api/(.*)",
+      "src": "/api/(.*)",
       "destination": "/app.js"
     },
     {
-      "source": "/config.js",
+      "src": "/config.js",
       "destination": "/public/dist/config.js"
     },
     {
-      "source": "/assets/(.*)",
+      "src": "/assets/(.*)",
       "destination": "/public/dist/assets/$1"
     },
     {
-      "source": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
+      "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
       "destination": "/public/dist/$1"
     },
     {
-      "source": "/",
+      "src": "/",
       "destination": "/public/dist/index.html"
     },
     {
-      "source": "/(.*)",
+      "src": "/(.*)",
       "destination": "/public/dist/index.html"
     }
   ],
