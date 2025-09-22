@@ -13,27 +13,27 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "destination": "/app.js"
+      "dest": "/app.js"
     },
     {
       "src": "/config.js",
-      "destination": "/public/dist/config.js"
+      "dest": "/public/dist/config.js"
     },
     {
       "src": "/assets/(.*)",
-      "destination": "/public/dist/assets/$1"
+      "dest": "/public/dist/assets/$1"
     },
     {
       "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
-      "destination": "/public/dist/$1"
+      "dest": "/public/dist/$1"
     },
     {
       "src": "/",
-      "destination": "/public/dist/index.html"
+      "dest": "/public/dist/index.html"
     },
     {
       "src": "/(.*)",
-      "destination": "/public/dist/index.html"
+      "dest": "/public/dist/index.html"
     }
   ],
   "env": {
