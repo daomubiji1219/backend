@@ -17,8 +17,8 @@
     "file": "assets/http-vendor-B2M11dG_.js",
     "name": "http-vendor"
   },
-  "_index-DNh-nhlH.js": {
-    "file": "assets/index-DNh-nhlH.js",
+  "_index-BDyoCcdP.js": {
+    "file": "assets/index-BDyoCcdP.js",
     "name": "index",
     "isDynamicEntry": true,
     "imports": [
@@ -45,7 +45,7 @@
     "name": "ui-vendor"
   },
   "index.html": {
-    "file": "assets/index-CNGzTXzs.js",
+    "file": "assets/index-tqYKx1q6.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
@@ -57,7 +57,7 @@
       "_router-vendor-CorBmyLz.js"
     ],
     "dynamicImports": [
-      "_index-DNh-nhlH.js",
+      "_index-BDyoCcdP.js",
       "src/components/Layout/MainLayout.tsx"
     ],
     "css": [
@@ -65,7 +65,7 @@
     ]
   },
   "src/components/Layout/MainLayout.tsx": {
-    "file": "assets/MainLayout-Cbb0IGBb.js",
+    "file": "assets/MainLayout-h9aHDASY.js",
     "name": "MainLayout",
     "src": "src/components/Layout/MainLayout.tsx",
     "isDynamicEntry": true,
