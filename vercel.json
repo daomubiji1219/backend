@@ -12,24 +12,28 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/app.js"
+      "source": "/api/(.*)",
+      "destination": "/app.js"
     },
     {
-      "src": "/assets/(.*)",
-      "dest": "/public/dist/assets/$1"
+      "source": "/config.js",
+      "destination": "/public/dist/config.js"
     },
     {
-      "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
-      "dest": "/public/dist/$1"
+      "source": "/assets/(.*)",
+      "destination": "/public/dist/assets/$1"
     },
     {
-      "src": "/",
-      "dest": "/public/dist/index.html"
+      "source": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
+      "destination": "/public/dist/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/public/dist/index.html"
+      "source": "/",
+      "destination": "/public/dist/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/public/dist/index.html"
     }
   ],
   "env": {

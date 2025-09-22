@@ -141,4 +141,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-startServer();
+// 导出给 Vercel，无需监听；仅在本地直接运行时启动服务器
+if (require.main === module) {
+  startServer();
+}
+
+module.exports = app;
