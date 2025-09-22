@@ -35,6 +35,18 @@ app.use(cors({
 //   res.sendFile(path.join(__dirname, 'public/dist/index.html'));
 // });
 
+// 添加API配置端点
+app.get('/api/config', (req, res) => {
+  const baseURL = process.env.NODE_ENV === 'production' 
+    ? `https://${req.get('host')}` 
+    : `http://localhost:${process.env.PORT || 3001}`;
+  
+  res.json({
+    apiBaseURL: baseURL,
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 // 集成认证路由
 app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
