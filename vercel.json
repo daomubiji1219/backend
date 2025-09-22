@@ -16,20 +16,16 @@
       "dest": "/app.js"
     },
     {
-      "src": "/vite.svg",
-      "dest": "/public/dist/vite.svg"
+      "src": "/config.js",
+      "dest": "/public/dist/config.js"
     },
     {
       "src": "/assets/(.*)",
       "dest": "/public/dist/assets/$1"
     },
     {
-      "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot|json))",
+      "src": "/(.*\\.(js|css|svg|png|jpg|jpeg|gif|ico|woff|woff2|ttf|eot))",
       "dest": "/public/dist/$1"
-    },
-    {
-      "src": "/config.js",
-      "dest": "/public/dist/config.js"
     },
     {
       "src": "/",

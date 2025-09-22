@@ -15,6 +15,7 @@
 		"multer": "^2.0.2",
 		"mysql2": "^3.6.5",
 		"openai": "^5.8.2",
+		"serverless-http": "^3.2.0",
 		"sqlite3": "^5.1.7"
 	},
 	"devDependencies": {
@@ -23,8 +24,12 @@
 	"scripts": {
 		"start": "node app.js",
 		"dev": "nodemon app.js",
+		"build": "echo 'Build completed - static files ready'",
 		"setup": "node setup.js",
 		"db:create": "node create-database.js",
-		"db:test": "node test-db-connection.js"
+		"db:test": "node test-db-connection.js",
+		"netlify:dev": "netlify dev",
+		"netlify:build": "pnpm run build",
+		"netlify:prepare": "node deploy-netlify.js"
 	}
 }

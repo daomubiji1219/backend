@@ -19,16 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 // app.use(history()); // 在 Vercel 中由路由配置处理
-app.use(express.static(path.join(__dirname, 'public/dist'), {
-  maxAge: '1d',
-  etag: false
-}));
-
-// 添加静态资源调试中间件
-app.use('/assets', (req, res, next) => {
-  console.log(`静态资源请求: ${req.path}`);
-  next();
-});
+app.use(express.static(path.join(__dirname, 'public/dist')));
 
 app.use(cors({
   origin: [
@@ -60,27 +51,15 @@ app.get('/api/config', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
 
-// SPA 路由处理 - 确保在所有环境中都能正确工作
-app.get('*', (req, res) => {
-  // 如果请求的是API路径，跳过
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ error: 'API endpoint not found' });
-  }
-  
-  // 如果请求的是静态资源，跳过
-  if (req.path.startsWith('/assets/') || 
-      req.path.endsWith('.js') || 
-      req.path.endsWith('.css') || 
-      req.path.endsWith('.svg') || 
-      req.path.endsWith('.png') || 
-      req.path.endsWith('.jpg') || 
-      req.path.endsWith('.ico')) {
-    return res.status(404).send('Static file not found');
-  }
-  
-  // 返回前端应用
-  res.sendFile(path.join(__dirname, 'public/dist/index.html'));
-});
+// SPA 路由处理 - 在 Vercel 中由路由配置处理
+// app.get('*', (req, res) => {
+//   // 如果请求的是API路径，跳过
+//   if (req.path.startsWith('/api/')) {
+//     return res.status(404).json({ error: 'API endpoint not found' });
+//   }
+//   // 返回前端应用
+//   res.sendFile(path.join(__dirname, 'public/dist/index.html'));
+// });
 
 
 const openai = new OpenAI({

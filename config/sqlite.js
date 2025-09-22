@@ -3,8 +3,19 @@ const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 require('dotenv').config();
 
-// 数据库文件路径
-const DB_PATH = path.join(__dirname, '..', 'database.sqlite');
+// 数据库文件路径 - 适配 Netlify Functions
+const DB_PATH = process.env.SQLITE_DB_PATH || path.join(__dirname, '..', 'database.sqlite');
+
+// 确保数据库目录存在（在 Netlify Functions 中）
+const fs = require('fs');
+const dbDir = path.dirname(DB_PATH);
+if (!fs.existsSync(dbDir)) {
+  try {
+    fs.mkdirSync(dbDir, { recursive: true });
+  } catch (error) {
+    console.warn('无法创建数据库目录:', error.message);
+  }
+}
 
 // 创建数据库连接
 const db = new sqlite3.Database(DB_PATH, (err) => {
