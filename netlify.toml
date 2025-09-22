@@ -1,6 +1,6 @@
 [build]
   # 构建命令
-  command = "pnpm install && pnpm run build"
+  command = "pnpm install --no-frozen-lockfile && pnpm run build"
   # 发布目录
   publish = "public/dist"
   # Functions 目录
