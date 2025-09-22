@@ -22,8 +22,12 @@ app.use(history());
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
 app.use(cors({
-  origin: ['http://localhost:5173','http://localhost:5175','http://localhost:5174'],// 前端地址
-
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5175', 
+    'http://localhost:5174',
+    /\.vercel\.app$/  // 允许所有 Vercel 部署域名
+  ],
   credentials: true, // 如果需要携带 cookies
 }));
 // // 路由fallback到index.html
