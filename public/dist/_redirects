@@ -1,6 +1,0 @@
-# Netlify 重定向规则
-# API 路由重定向到 Netlify Functions
-/api/*  /.netlify/functions/api/:splat  200
-
-# SPA 路由处理 - 所有其他请求重定向到 index.html
-/*  /index.html  200
