@@ -39,7 +39,7 @@ app.use(cors({
 app.get('/api/config', (req, res) => {
   const baseURL = process.env.NODE_ENV === 'production' 
     ? `https://${req.get('host')}` 
-    : `http://localhost:${process.env.PORT || 3001}`;
+    : `http://localhost:${process.env.PORT || 3000}`;
   
   res.json({
     apiBaseURL: baseURL,
@@ -92,7 +92,7 @@ async function startServer() {
     console.log('数据库初始化完成');
     
     // 启动服务器
-    const PORT = process.env.PORT || 3001;
+    const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`服务器已启动，端口: ${PORT}`);
       console.log(`API地址: http://localhost:${PORT}/api`);

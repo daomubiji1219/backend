@@ -29,6 +29,7 @@
 		"db:create": "node create-database.js",
 		"db:test": "node test-db-connection.js",
 		"vercel-build": "echo 'Vercel build process completed'",
+		"vercel:prepare": "node deploy-vercel.js",
 		"netlify:dev": "netlify dev",
 		"netlify:build": "pnpm run build"
 	}
