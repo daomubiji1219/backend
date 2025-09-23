@@ -24,10 +24,11 @@
 	"scripts": {
 		"start": "node app.js",
 		"dev": "nodemon app.js",
-		"build": "echo 'Build completed - static files ready'",
+		"build": "echo 'Build completed - static files ready for Vercel'",
 		"setup": "node setup.js",
 		"db:create": "node create-database.js",
 		"db:test": "node test-db-connection.js",
+		"vercel-build": "echo 'Vercel build process completed'",
 		"netlify:dev": "netlify dev",
 		"netlify:build": "pnpm run build"
 	}

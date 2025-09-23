@@ -43,3 +43,14 @@ build/
 
 # 上传文件目录
 uploads/
+
+# Vercel 部署相关
+.vercel
+.vercel/
+*.vercel
+
+# Netlify 部署相关（如果之前配置过）
+.netlify/
+
+# 部署缓存
+.cache/
