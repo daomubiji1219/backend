@@ -11,14 +11,13 @@ const OpenAI = require('openai');
 const { initDatabase } = require('./config/sqlite');
 const authRoutes = require('./routes/auth');
 const uploadRoutes = require('./routes/upload');
-const history = require('connect-history-api-fallback');
+const chatRoutes = require('./routes/chat');
 
 require('dotenv').config();
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-// app.use(history()); // 在 Vercel 中由路由配置处理
 app.use(express.static(path.join(__dirname, 'public/dist')));
 
 app.use(cors({
@@ -26,7 +25,10 @@ app.use(cors({
     'http://localhost:5173',
     'http://localhost:5175', 
     'http://localhost:5174',
-    /\.vercel\.app$/  // 允许所有 Vercel 部署域名
+    'https://8.137.166.34',
+    'http://36.163.170.248',
+    /\.vercel\.app$/,  // 允许所有 Vercel 部署域名
+    null, // 必须加：适配 Expo Go 的 Origin: null 场景
   ],
   credentials: true, // 如果需要携带 cookies
 }));
@@ -39,7 +41,7 @@ app.use(cors({
 app.get('/api/config', (req, res) => {
   const baseURL = process.env.NODE_ENV === 'production' 
     ? `https://${req.get('host')}` 
-    : `http://localhost:${process.env.PORT || 3000}`;
+    : `http://localhost:${process.env.PORT || 3001}`;
   
   res.json({
     apiBaseURL: baseURL,
@@ -50,6 +52,9 @@ app.get('/api/config', (req, res) => {
 // 集成认证路由
 app.use('/api/auth', authRoutes);
 app.use('/api', uploadRoutes);
+
+// 集成聊天路由
+app.use('/api/chat', chatRoutes);
 
 // SPA 路由处理 - 在 Vercel 中由路由配置处理
 // app.get('*', (req, res) => {
@@ -89,20 +94,12 @@ async function startServer() {
   try {
     // 初始化数据库
     await initDatabase();
-    console.log('数据库初始化完成');
     
     // 启动服务器
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`服务器已启动，端口: ${PORT}`);
       console.log(`API地址: http://localhost:${PORT}/api`);
-      console.log('认证端点:');
-      console.log('  POST /api/auth/login - 用户登录');
-      console.log('  POST /api/auth/register - 用户注册');
-      console.log('  GET /api/auth/me - 获取当前用户信息');
-      console.log('  PUT /api/auth/profile - 更新用户资料');
-      console.log('  POST /api/auth/verify-token - 验证token');
-      console.log('  GET /api/auth/check - 检查认证状态');
     });
   } catch (error) {
     console.error('启动服务器失败:', error);

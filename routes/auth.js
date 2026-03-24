@@ -1,6 +1,11 @@
-const express = require('express');
-const User = require('../models/User');
-const { generateToken, authenticateToken } = require('../utils/jwt');
+const express = require("express");
+const User = require("../models/User");
+const {
+  generateToken,
+  authenticateToken,
+  authenticateRefreshToken,
+} = require("../utils/jwt");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 /**
@@ -9,7 +14,7 @@ const router = express.Router();
  */
 
 // 用户注册
-router.post('/register', async (req, res) => {
+router.post("/register", async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body;
 
@@ -17,14 +22,14 @@ router.post('/register', async (req, res) => {
     if (!username || !email || !password || !confirmPassword) {
       return res.status(400).json({
         success: false,
-        message: '所有字段都是必填的'
+        message: "所有字段都是必填的",
       });
     }
 
     if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
-        message: '两次输入的密码不一致'
+        message: "两次输入的密码不一致",
       });
     }
 
@@ -32,7 +37,7 @@ router.post('/register', async (req, res) => {
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: '密码长度至少为6位'
+        message: "密码长度至少为6位",
       });
     }
 
@@ -41,7 +46,7 @@ router.post('/register', async (req, res) => {
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        message: '邮箱格式不正确'
+        message: "邮箱格式不正确",
       });
     }
 
@@ -49,53 +54,62 @@ router.post('/register', async (req, res) => {
     const newUser = await User.create({
       username,
       email,
-      password
+      password,
     });
 
     // 生成JWT token
-    const token = generateToken(newUser);
+    const accessToken = generateToken(newUser);
+    const refreshToken = generateToken(newUser);
 
     // 设置Cookie（用于前端无感登录）
-    res.cookie('auth_token', token, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000 // 24小时
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 60 * 1000, // 30分钟
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
     });
 
     res.status(201).json({
       success: true,
-      message: '注册成功',
+      message: "注册成功",
       user: {
         id: newUser.id,
         username: newUser.username,
         email: newUser.email,
         avatar: newUser.avatar,
         role: newUser.role,
-        createdAt: newUser.created_at
+        createdAt: newUser.created_at,
       },
-      token
     });
   } catch (error) {
-    console.error('注册错误:', error);
-    
+    console.error("注册错误:", error);
+
     // 处理特定的错误消息
-    if (error.message.includes('用户名已存在') || error.message.includes('邮箱已被注册')) {
+    if (
+      error.message.includes("用户名已存在") ||
+      error.message.includes("邮箱已被注册")
+    ) {
       return res.status(409).json({
         success: false,
-        message: error.message
+        message: error.message,
       });
     }
 
     res.status(500).json({
       success: false,
-      message: '服务器内部错误'
+      message: "服务器内部错误",
     });
   }
 });
 
 // 用户登录
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
@@ -103,7 +117,7 @@ router.post('/login', async (req, res) => {
     if (!username || !password) {
       return res.status(400).json({
         success: false,
-        message: '用户名和密码不能为空'
+        message: "用户名和密码不能为空",
       });
     }
 
@@ -112,24 +126,31 @@ router.post('/login', async (req, res) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: '用户名或密码错误'
+        message: "用户名或密码错误",
       });
     }
 
     // 生成JWT token
-    const token = generateToken(user);
+    const accessToken = generateToken(user);
+    const refreshToken = generateToken(user);
 
     // 设置Cookie（用于前端无感登录）
-    res.cookie('auth_token', token, {
+    res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000 // 24小时
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 60 * 1000, // 30分钟
+    });
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
     });
 
     res.json({
       success: true,
-      message: '登录成功',
+      message: "登录成功",
       user: {
         id: user.id,
         username: user.username,
@@ -137,15 +158,14 @@ router.post('/login', async (req, res) => {
         avatar: user.avatar,
         role: user.role,
         createdAt: user.createdAt,
-        lastLoginAt: user.lastLoginAt
+        lastLoginAt: user.lastLoginAt,
       },
-      token
     });
   } catch (error) {
-    console.error('登录错误:', error);
+    console.error("登录错误:", error);
     res.status(500).json({
       success: false,
-      message: '服务器内部错误'
+      message: "服务器内部错误",
     });
   }
 });
@@ -156,13 +176,13 @@ router.post('/login', async (req, res) => {
  */
 
 // 获取当前用户信息
-router.get('/me', authenticateToken, async (req, res) => {
+router.get("/me", authenticateToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '用户不存在'
+        message: "用户不存在",
       });
     }
 
@@ -175,20 +195,20 @@ router.get('/me', authenticateToken, async (req, res) => {
         avatar: user.avatar,
         role: user.role,
         createdAt: user.created_at,
-        lastLoginAt: user.last_login_at
-      }
+        lastLoginAt: user.last_login_at,
+      },
     });
   } catch (error) {
-    console.error('获取用户信息错误:', error);
+    console.error("获取用户信息错误:", error);
     res.status(500).json({
       success: false,
-      message: '服务器内部错误'
+      message: "服务器内部错误",
     });
   }
 });
 
 // 更新用户资料
-router.put('/profile', authenticateToken, async (req, res) => {
+router.put("/profile", authenticateToken, async (req, res) => {
   try {
     const { username, email, avatar } = req.body;
     const updates = {};
@@ -200,7 +220,7 @@ router.put('/profile', authenticateToken, async (req, res) => {
     if (Object.keys(updates).length === 0) {
       return res.status(400).json({
         success: false,
-        message: '没有提供要更新的字段'
+        message: "没有提供要更新的字段",
       });
     }
 
@@ -210,7 +230,7 @@ router.put('/profile', authenticateToken, async (req, res) => {
       if (!emailRegex.test(email)) {
         return res.status(400).json({
           success: false,
-          message: '邮箱格式不正确'
+          message: "邮箱格式不正确",
         });
       }
     }
@@ -219,7 +239,7 @@ router.put('/profile', authenticateToken, async (req, res) => {
 
     res.json({
       success: true,
-      message: '用户信息更新成功',
+      message: "用户信息更新成功",
       user: {
         id: updatedUser.id,
         username: updatedUser.username,
@@ -227,22 +247,22 @@ router.put('/profile', authenticateToken, async (req, res) => {
         avatar: updatedUser.avatar,
         role: updatedUser.role,
         createdAt: updatedUser.created_at,
-        lastLoginAt: updatedUser.last_login_at
-      }
+        lastLoginAt: updatedUser.last_login_at,
+      },
     });
   } catch (error) {
-    console.error('更新用户信息错误:', error);
-    
-    if (error.message.includes('已被使用')) {
+    console.error("更新用户信息错误:", error);
+
+    if (error.message.includes("已被使用")) {
       return res.status(409).json({
         success: false,
-        message: error.message
+        message: error.message,
       });
     }
 
     res.status(500).json({
       success: false,
-      message: '服务器内部错误'
+      message: "服务器内部错误",
     });
   }
 });
@@ -253,33 +273,33 @@ router.put('/profile', authenticateToken, async (req, res) => {
  */
 
 // 验证token有效性
-router.post('/verify-token', authenticateToken, (req, res) => {
+router.post("/verify-token", authenticateToken, (req, res) => {
   res.json({
     success: true,
-    message: 'Token有效',
+    message: "Token有效",
     user: {
       userId: req.user.userId,
       username: req.user.username,
-      role: req.user.role
-    }
+      role: req.user.role,
+    },
   });
 });
 
 // 检查认证状态 - 前端无感登录使用
-router.get('/check', authenticateToken, async (req, res) => {
+router.get("/check", authenticateToken, async (req, res) => {
   try {
     // 获取完整的用户信息
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: '用户不存在'
+        message: "用户不存在",
       });
     }
 
     res.json({
       success: true,
-      message: '认证状态有效',
+      message: "认证状态有效",
       user: {
         id: user.id,
         username: user.username,
@@ -287,84 +307,78 @@ router.get('/check', authenticateToken, async (req, res) => {
         avatar: user.avatar,
         role: user.role,
         createdAt: user.created_at,
-        lastLoginAt: user.last_login_at
-      }
+        lastLoginAt: user.last_login_at,
+      },
     });
   } catch (error) {
-    console.error('检查认证状态错误:', error);
+    console.error("检查认证状态错误:", error);
     res.status(500).json({
       success: false,
-      message: '服务器内部错误'
+      message: "服务器内部错误",
     });
   }
 });
 
 // 刷新token接口 - 前端自动刷新token使用
-router.post('/refresh-token', async (req, res) => {
+router.post("/refresh-token", authenticateRefreshToken, async (req, res) => {
   try {
-    // 从请求头获取当前token
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      return res.status(401).json({
+    // 检查用户是否仍然存在
+    const user = await User.findById(req.user.userId);
+    if (!user) {
+      return res.status(404).json({
         success: false,
-        message: '缺少认证token'
+        message: "用户不存在",
       });
     }
 
-    const token = authHeader.substring(7);
-    const jwt = require('jsonwebtoken');
-    
-    try {
-      // 验证token（即使过期也要能解析出用户信息）
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key', { ignoreExpiration: true });
-      
-      // 检查用户是否仍然存在
-      const user = await User.findById(decoded.userId);
-      if (!user) {
-        return res.status(404).json({
-          success: false,
-          message: '用户不存在'
-        });
-      }
+    // 生成新的token
+    const newAccessToken = generateToken(user);
+    // 生成新的refreshToken
+    const newRefreshToken = generateToken(user);
 
-      // 生成新的token
-      const newToken = generateToken(user);
+    // 设置新的accessToken Cookie
+    res.cookie("accessToken", newAccessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 30 * 60 * 1000, // 30分钟
+    });
+    // 设置新的refreshToken Cookie
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7天
+    });
 
-      // 设置新的Cookie
-      res.cookie('auth_token', newToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 24 * 60 * 60 * 1000 // 24小时
-      });
-
-      res.json({
-        success: true,
-        message: 'Token刷新成功',
-        token: newToken,
-        user: {
-          id: user.id,
-          username: user.username,
-          email: user.email,
-          avatar: user.avatar,
-          role: user.role,
-          createdAt: user.created_at,
-          lastLoginAt: user.last_login_at
-        }
-      });
-    } catch (jwtError) {
-      return res.status(401).json({
-        success: false,
-        message: 'Token无效或已损坏'
-      });
-    }
-  } catch (error) {
-    console.error('刷新token错误:', error);
-    res.status(500).json({
+    res.json({
+      success: true,
+      message: "Token刷新成功",
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+        avatar: user.avatar,
+        role: user.role,
+        createdAt: user.created_at,
+        lastLoginAt: user.last_login_at,
+      },
+    });
+  } catch (jwtError) {
+    return res.status(401).json({
       success: false,
-      message: '服务器内部错误'
+      message: "Token无效或已损坏",
     });
   }
+});
+
+router.post("/logout", (req, res) => {
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+  res.json({
+    success: true,
+    message: "用户已注销",
+  });
 });
 
 module.exports = router;

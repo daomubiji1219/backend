@@ -4,6 +4,7 @@
 	"description": "AI Code Reviewer Backend API",
 	"main": "app.js",
 	"dependencies": {
+		"@babel/eslint-parser": "^7.28.5",
 		"axios": "^1.10.0",
 		"bcryptjs": "^2.4.3",
 		"connect-history-api-fallback": "^2.0.0",
@@ -16,20 +17,21 @@
 		"mysql2": "^3.6.5",
 		"openai": "^5.8.2",
 		"serverless-http": "^3.2.0",
-		"sqlite3": "^5.1.7"
+		"sqlite3": "^5.1.7",
+		"uuid": "^13.0.0"
 	},
 	"devDependencies": {
+		"eslint": "^9.38.0",
+		"eslint-plugin-security": "^3.0.1",
 		"nodemon": "^3.1.10"
 	},
 	"scripts": {
 		"start": "node app.js",
 		"dev": "nodemon app.js",
-		"build": "echo 'Build completed - static files ready for Vercel'",
+		"build": "echo 'Build completed - static files ready'",
 		"setup": "node setup.js",
 		"db:create": "node create-database.js",
 		"db:test": "node test-db-connection.js",
-		"vercel-build": "echo 'Vercel build process completed'",
-		"vercel:prepare": "node deploy-vercel.js",
 		"netlify:dev": "netlify dev",
 		"netlify:build": "pnpm run build"
 	}
